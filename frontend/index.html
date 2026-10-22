@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NandShield AI | Security Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="ns-intro" role="status" aria-label="Loading NandShield AI">
+  <div class="ns-intro-content">
+    <div class="ns-logo-mark">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <path d="M32 5 54 14V30C54 44 45 54 32 60 19 54 10 44 10 30V14Z"
+          fill="none" stroke="currentColor" stroke-width="3"/>
+        <path d="m21 32 7 7 16-17"
+          fill="none" stroke="currentColor" stroke-width="4"
+          stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="ns-intro-brand">NANDSHIELD <span>AI</span></div>
+    <div class="ns-intro-caption">BREAK THE WEAKNESS. BUILD THE DEFENSE.</div>
+    <div class="ns-scan-orbit"><span></span></div>
+    <div class="ns-intro-status">INITIALIZING SECURITY ENVIRONMENT</div>
+    <div class="ns-progress"><span></span></div>
+    <div class="ns-intro-foot">LOCAL SECURITY TESTING PLATFORM</div>
+  </div>
+</div>
+    <aside class="sidebar">
+        <h2>🛡️ NandShield <span>AI</span></h2>
+        <p class="muted">SECURITY PLATFORM</p>
+        <nav>
+            <a class="active" href="#">▦ &nbsp; Dashboard</a>
+            <a href="#results">◈ &nbsp; Security Results</a>
+            <a href="#history">◷ &nbsp; Scan History</a>
+            <a href="#comparison">⇄ &nbsp; Compare Scans</a>
+            <a href="#about">ⓘ &nbsp; About</a>
+        </nav>
+        <div class="side-bottom">LOCAL SECURITY LAB<br><span>● API connection pending</span></div>
+    </aside>
+
+    <main>
+        <header>
+            <div>
+                <p class="muted">SECURITY CENTER / OVERVIEW</p>
+                <h1>Security Dashboard</h1>
+                <p class="muted">Break the Weakness. Build the Defense.</p>
+            </div>
+            <div class="header-actions"><button id="exportBtn" onclick="exportReport()" disabled>↓ Export JSON</button><button id="scanBtn" onclick="runScan()">▶ Run All Tests</button></div>
+        </header>
+
+        <div id="connection" class="connection">Connecting to NandShield API...</div>
+
+        <section class="stats">
+            <article class="stat">
+                <p>Total Tests</p>
+                <h2 id="total">—</h2>
+                <small>Executed checks</small>
+            </article>
+            <article class="stat">
+                <p>Flagged Tests</p>
+                <h2 class="red" id="flagged">—</h2>
+                <small>Tests with findings</small>
+            </article>
+            <article class="stat">
+                <p>Passed Tests</p>
+                <h2 class="green" id="passed">—</h2>
+                <small>No detected issue</small>
+            </article>
+            <article class="stat">
+                <p>Total Findings</p>
+                <h2 class="orange" id="findings">—</h2>
+                <small>Detected issues</small>
+            </article>
+        </section>
+
+        <section class="panel">
+            <div class="panel-heading">
+                <div>
+                    <h2>Severity Breakdown</h2>
+                    <p class="muted">Findings grouped by severity</p>
+                </div>
+            </div>
+            <div class="severity">
+                <div><span class="dot high"></span> High <strong id="high">—</strong></div>
+                <div><span class="dot medium"></span> Medium <strong id="medium">—</strong></div>
+                <div><span class="dot low"></span> Low <strong id="low">—</strong></div>
+            </div>
+        </section>
+
+        <section class="panel" id="results">
+            <div class="panel-heading">
+                <div>
+                    <h2>Security Test Results</h2>
+                    <p class="muted">Detailed results from the latest scan</p>
+                </div>
+                <span id="scanStatus" class="pill">NOT SCANNED</span>
+            </div>
+            <div id="filterControls" class="filter-controls" aria-label="Filter security test results">
+                <button type="button" data-filter="all" class="filter-active" aria-pressed="true">All Tests</button>
+                <button type="button" data-filter="flagged" aria-pressed="false">Flagged</button>
+                <button type="button" data-filter="passed" aria-pressed="false">Passed</button>
+                <button type="button" data-filter="high" aria-pressed="false">High</button>
+                <button type="button" data-filter="medium" aria-pressed="false">Medium</button>
+                <button type="button" data-filter="low" aria-pressed="false">Low</button>
+            </div>
+            <div id="resultsList" class="results-list">
+                <p class="muted">Click “Run All Tests” to start your first scan.</p>
+            </div>
+        </section>
+
+        <section class="panel" id="about">
+            <h2>About this environment</h2>
+            <p class="muted">NandShield AI currently tests a deliberately simulated chatbot. Results demonstrate the scanner's behavior and do not establish the security of a real AI model.</p>
+        </section>
+        <section class="panel" id="history">
+            <div class="panel-heading">
+                <div>
+                    <h2>Scan History</h2>
+                    <p class="muted">Review previous scans saved in this browser.</p>
+                </div>
+                <div class="history-actions">
+                    <span id="historyCount" class="pill">0 saved scans</span>
+                    <button id="clearHistoryBtn" onclick="clearHistory()">Clear History</button>
+                </div>
+            </div>
+            <div id="historyList" class="history-list">
+                <p class="muted">No saved scans yet.</p>
+            </div>
+        </section>
+        <section class="panel" id="comparison">
+            <div class="panel-heading">
+                <div>
+                    <h2>Compare Scans</h2>
+                    <p class="muted">Compare two saved scans to track changes in detected findings.</p>
+                </div>
+                <span class="pill">SCAN ANALYSIS</span>
+            </div>
+
+            <div class="comparison-selectors">
+                <label>
+                    <span>Older scan</span>
+                    <select id="compareOlder"></select>
+                </label>
+                <label>
+                    <span>Newer scan</span>
+                    <select id="compareNewer"></select>
+                </label>
+                <button id="compareBtn" type="button">Compare Reports</button>
+            </div>
+
+            <p id="comparisonMessage" class="muted comparison-message">
+                Save at least two scans to compare their results.
+            </p>
+
+            <div id="comparisonSummary" class="comparison-summary"></div>
+            <div id="comparisonChanges" class="comparison-changes"></div>
+        </section>
+        <footer>NANDSHIELD AI · DEVELOPMENT BUILD</footer>
+    </main>
+    <script src="app.js"></script>
+</body>
+</html>
