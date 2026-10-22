@@ -88,3 +88,14 @@ Only test real systems that you own or have explicit permission to assess.
 ## License
 
 No license has been selected yet. Choose a license before publicly distributing the project.
+## Screenshots
+
+### Dashboard
+![NandShield AI Dashboard](screenshots/dashboard.png)
+
+### Security Scan Results
+![Security Scan Results](screenshots/scan-results.png)
+
+### Scan Comparison
+![Scan Comparison](screenshots/compare-scans.png)
+
